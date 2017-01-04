@@ -58,14 +58,14 @@ void FileSystem::MountDirectory(const std::string& directory)
 		
 	FindClose(hFind);
 #elif defined(PLATFORM_Linux)
-	/*DIR *dir;
+	DIR *dir;
 	struct dirent *ent;
 	class stat st;
 
 	dir = opendir(directory);
 	while ((ent = readdir(directory.c_str())) != NULL) {
 		std::string file_name = ent->d_name;
-		std::string full_file_name = directory + "/" + file_name;
+		//std::string full_file_name = directory + "/" + file_name;
 
 		if (file_name[0] == '.')
 			continue;
@@ -76,10 +76,10 @@ void FileSystem::MountDirectory(const std::string& directory)
 		const bool is_directory = (st.st_mode & S_IFDIR) != 0;
 		if (is_directory)
 			continue;
-
+		std::cout << directory + "/" + file_name; << std::endl;
 		m_files.push_back({ directory ,file_name, ExtractExtension(file_name) });
 	}
-	closedir(dir);*/
+	closedir(dir);
 
 #endif
 }
@@ -172,7 +172,7 @@ std::unique_ptr<File> FileSystem::GetFile(const std::string& filename) const
 #if defined(PLATFORM_Windows)
 		return std::unique_ptr<File>(new WindowsFile(physicalFilePath));
 #elif defined(PLATFORM_Linux)
-		// return std::unique_ptr<File>(new LinuxFile(physicalFilePath));
+		return std::unique_ptr<File>(new LinuxFile(physicalFilePath));
 #endif
 	}
 	return std::unique_ptr<File>();
