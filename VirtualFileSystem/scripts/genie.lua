@@ -30,6 +30,7 @@ project "VirtualFileSystem"
 	
 	configuration {"gmake"}
 		buildoptions_cpp{
+			"-x c++",
 			"-std=c++11"
 		}
 	excludes {
