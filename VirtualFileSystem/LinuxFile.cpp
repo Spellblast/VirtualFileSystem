@@ -62,10 +62,7 @@ size_t LinuxFile::Write(const uint8_t* buffer, size_t size)
 
 void LinuxFile::Close()
 {
-	if (m_fd == 0)
-	{
-		throw "Invalid Handle!";
-	}
+	
 	close(m_fd);
 }
 #endif
