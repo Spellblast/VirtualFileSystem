@@ -122,7 +122,7 @@ std::string FileSystem::GetPhysicalFilePath(const std::string& filename) const
 
 		std::cout << "More then one file found with the name " << filename << std::endl;
 		std::cout << "select the correct one :" << std::endl;
-		for (int i = 0; i < PossibleFiles.size(); ++i)
+		for (size_t i = 0; i < PossibleFiles.size(); ++i)
 		{
 						
 			std::cout << "[" << i << "] " << PossibleFiles[i] << std::endl;
@@ -140,7 +140,7 @@ std::string FileSystem::GetPhysicalFilePath(const std::string& filename) const
 
 		// This code converts from string to number safely.
 		std::stringstream myStream(input);
-		if (myStream >> myNumber && myNumber < PossibleFiles.size())
+		if (myStream >> myNumber && myNumber < (int)PossibleFiles.size())
 			break;
 		std::cout << "Invalid number, please try again" << std::endl;
 	}
