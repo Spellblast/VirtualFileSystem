@@ -32,9 +32,7 @@ project "VirtualFileSystem"
 		buildoptions_cpp{
 			"-std=c++11"
 		}
+		
 	excludes {
 		path.join(PROJ_DIR, "Debug*"), 
 		}
-	
-	
-	
