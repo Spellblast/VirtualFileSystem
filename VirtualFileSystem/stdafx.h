@@ -5,10 +5,13 @@
 
 #pragma once
 
+#if defined(PLATFORM_Windows)
 #include "targetver.h"
 
 #include <stdio.h>
 #include <tchar.h>
+#elif defined(PLATFORM_Linux)
+#endif
 
 
 
