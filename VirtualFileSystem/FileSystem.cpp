@@ -64,8 +64,8 @@ void FileSystem::MountDirectory(const std::string& directory)
 
 	dir = opendir(directory);
 	while ((ent = readdir(directory.c_str())) != NULL) {
-		const string file_name = ent->d_name;
-		const string full_file_name = directory + "/" + file_name;
+		std::string file_name = ent->d_name;
+		std::string full_file_name = directory + "/" + file_name;
 
 		if (file_name[0] == '.')
 			continue;
