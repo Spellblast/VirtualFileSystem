@@ -172,7 +172,7 @@ std::unique_ptr<File> FileSystem::GetFile(const std::string& filename) const
 #if defined(PLATFORM_Windows)
 		return std::unique_ptr<File>(new WindowsFile(physicalFilePath));
 #elif defined(PLATFORM_Linux)
-		return std::unique_ptr<File>(new LinuxFile(physicalFilePath));
+		// return std::unique_ptr<File>(new LinuxFile(physicalFilePath));
 #endif
 	}
 	return std::unique_ptr<File>();
