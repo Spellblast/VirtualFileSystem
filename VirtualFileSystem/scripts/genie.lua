@@ -27,8 +27,8 @@ project "VirtualFileSystem"
 		path.join(PROJ_DIR, "*.cpp"),
 		path.join(PROJ_DIR, "*.h"),		
 	}
-	
-	configuration {"gmake"}
+
+	configuration {"linux","gmake"}
 		buildoptions_cpp{
 			"-std=c++14"
 		}
