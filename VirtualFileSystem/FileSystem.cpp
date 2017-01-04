@@ -58,7 +58,7 @@ void FileSystem::MountDirectory(const std::string& directory)
 		
 	FindClose(hFind);
 #elif defined(PLATFORM_Linux)
-	DIR *dir;
+	/*DIR *dir;
 	struct dirent *ent;
 	class stat st;
 
@@ -79,7 +79,7 @@ void FileSystem::MountDirectory(const std::string& directory)
 
 		m_files.push_back({ directory ,file_name, ExtractExtension(file_name) });
 	}
-	closedir(dir);
+	closedir(dir);*/
 
 #endif
 }
