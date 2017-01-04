@@ -62,8 +62,8 @@ void FileSystem::MountDirectory(const std::string& directory)
 	struct dirent *ent;
 	//struct stat st;
 
-	dir = opendir(directory);
-	while ((ent = readdir(directory.c_str())) != NULL) {
+	dir = opendir(directory.c_str);
+	while ((ent = readdir(dir)) != NULL) {
 		std::string file_name = ent->d_name;
 		//std::string full_file_name = directory + "/" + file_name;
 
