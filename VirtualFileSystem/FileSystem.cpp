@@ -8,6 +8,9 @@
 #include <sys/types.h>
 #include <dirent.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #endif
 #include <iostream>
 #include <algorithm>
@@ -60,24 +63,32 @@ void FileSystem::MountDirectory(const std::string& directory)
 #elif defined(PLATFORM_Linux)
 	DIR *dir;
 	struct dirent *ent;
-	//struct stat st;
+	struct stat st;
 
-	dir = opendir(directory.c_str);
+	dir = opendir(directory.c_str());
+	if(dir == NULL)
+	{
+		std::cout << "Error could not open directory " + directory << std::endl;
+		return;
+	}
 	while ((ent = readdir(dir)) != NULL) {
 		std::string file_name = ent->d_name;
-		//std::string full_file_name = directory + "/" + file_name;
+		std::string full_file_name = directory + "/" + file_name;
 
 		if (file_name[0] == '.')
 			continue;
 
-	/*	if (stat(full_file_name.c_str(), &st) == -1)
-			continue;*/
+		if (stat(full_file_name.c_str(), &st) == -1)
+			continue;
 
-		/*const bool is_directory = (st.st_mode & S_IFDIR) != 0;
+		const bool is_directory = (st.st_mode & S_IFDIR) != 0;
 		if (is_directory)
-			continue;*/
-		std::cout << directory + "/" + file_name; << std::endl;
-		m_files.push_back({ directory ,file_name, ExtractExtension(file_name) });
+		{
+			MountDirectory(directory + "/" + file_name);
+		}else
+		{
+			m_Files.push_back({ directory ,file_name, ExtractExtension(file_name) });
+		}
 	}
 	closedir(dir);
 
@@ -95,7 +106,11 @@ std::string FileSystem::GetPhysicalFilePath(const std::string& filename) const
 		if (it != m_Files.end())
 		{
 			FileEntry e = *it;
+#if defined(PLATFORM_Windows)
 			PossibleFiles.push_back(e.m_Directory + "\\" + filename);
+#elif defined(PLATFORM_Linux)
+			PossibleFiles.push_back(e.m_Directory + "/" + filename);
+#endif
 			++it;
 		}
 		
@@ -143,7 +158,11 @@ void FileSystem::GetFilesInDirectory(std::vector<std::string>& file_table, const
 		if (it != m_Files.end())
 		{
 			FileEntry e = *it;
+#if defined(PLATFORM_Windows)
 			file_table.push_back(e.m_Directory + "\\" + e.m_Name);
+#elif defined(PLATFORM_Linux)
+			file_table.push_back(e.m_Directory + "/" + e.m_Name);
+#endif
 			++it;
 		}
 	}
@@ -158,7 +177,11 @@ void FileSystem::GetFilesWithExtension(std::vector<std::string>& file_table, con
 		if (it != m_Files.end())
 		{
 			FileEntry e = *it;
+#if defined(PLATFORM_Windows)
 			file_table.push_back(e.m_Directory + "\\" + e.m_Name);
+#elif defined(PLATFORM_Linux)
+			file_table.push_back(e.m_Directory + "/" + e.m_Name);
+#endif		
 			++it;
 		}
 	}

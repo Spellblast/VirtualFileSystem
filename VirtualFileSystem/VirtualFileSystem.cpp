@@ -14,8 +14,8 @@ int main()
 
 #if defined(PLATFORM_Linux)
 	std::cout << "Running on Linux Platform" << std::endl;
-	system.MountDirectory("home/mike/TestDirectory");
-	system.MountDirectory("home/mike/AnotherTestDirectory");
+	system.MountDirectory("/home/mike/TestDirectory");
+	system.MountDirectory("/home/mike/AnotherTestDirectory");
 #elif defined(PLATFORM_Windows)
 	std::cout << "Running on Windows Platform" << std::endl;
 	system.MountDirectory("D:\\TestDirectory");
@@ -33,7 +33,12 @@ int main()
 
 	//Should return all files in C:\\TestDirectory\\Some\\Directory
 	// and C:\\AnotherTestDirectory\\Some\\Directory
+#if defined(PLATFORM_Linux)
 	system.GetFilesInDirectory(file_table, "Some\\Directory");
+#elif defined(PLATFORM_Windows)
+	system.GetFilesInDirectory(file_table, "Some/Directory");
+#endif
+	
 
 	for (auto & path : file_table)
 	{
