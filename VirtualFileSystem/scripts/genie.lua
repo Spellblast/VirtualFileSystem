@@ -1,38 +1,65 @@
 solution "VirtualFileSystem"
-configurations{
-	"Debug",
-	"Release",
-}
-
-platforms{
-	"x32",
-	"x64",
-	"Native",
-}
-
-language "C++"
-location ".."
-
-PROJ_DIR = path.getabsolute("..")
-
-project "VirtualFileSystem"
-	kind "ConsoleApp"
-	
-	debugdir (path.join(PROJ_DIR, "Debug"))
-	targetdir (path.join(PROJ_DIR, "Build"))
-	defines{"PLATFORM_Linux"}
-	flags{"Unicode"}	
-	
-	files{
-		path.join(PROJ_DIR, "*.cpp"),
-		path.join(PROJ_DIR, "*.h"),		
+	configurations {
+		"Debug",
+		"Release",
+		"linux"
 	}
 
-	configuration {"linux","gmake"}
-		buildoptions_cpp{
-			"-std=c++11"
+	platforms {
+		"x32",
+		"x64",
+		"Native",
+	}
+
+
+location ".."
+targetdir "../bin"
+debugdir "../bin"
+startproject "example1"
+
+PROJ_DIR =path.getabsolute("..")
+flags { "NoExceptions", "NoRTTI", "NoPCH" }
+if (os.is("Windows")) then defines { "_CRT_SECURE_NO_WARNINGS" } end
+
+
+
+    configuration { "Release" }
+    	flags { "Optimize", "OptimizeSpeed", "NoEditAndContinue", "No64BitChecks" }
+		defines { "NDEBUG", "PLATFORM_Linux" }
+		objdir (path.join(PROJ_DIR,  "/release"))
+    configuration { "Debug" }
+		flags {"Symbols" }
+		defines { "DEBUG", "PLATFORM_Linux" }
+		objdir (path.join(PROJ_DIR,  "/debug"))
+
+	configuration { "linux" }
+		defines{"LINUX"}
+		buildoptions {
+			"-std=c++14"
+		} 		
+
+
+	configuration { "gmake" }
+		buildoptions { 
+			"-msse4.1",
+			"-fPIC",
+			"-std=c++14"
 		}
-		
-	excludes {
-		path.join(PROJ_DIR, "Debug*"), 
-		}
+
+    configuration {}
+
+project "example1"
+	
+	kind "ConsoleApp"
+	language "C++"
+	
+
+files {
+	path.join(PROJ_DIR, "*.cpp"),
+	path.join(PROJ_DIR, "*.h"),
+
+}
+
+	includedirs{
+path.join(PROJ_DIR, "include"),
+}
