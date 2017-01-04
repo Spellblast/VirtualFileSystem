@@ -1,7 +1,14 @@
+#if defined(PLATFORM_Windows)
 #include "WindowsFile.h"
 #include <windows.h>
 #include <tchar.h>
 #include <stdio.h>
+#elif defined(PLATFORM_Linux)
+#include "LinuxFile.h"
+#include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
+#endif
 #include <iostream>
 #include <algorithm>
 #include <sstream>
@@ -19,6 +26,7 @@ FileSystem::~FileSystem()
 
 void FileSystem::MountDirectory(const std::string& directory)
 {
+#if defined(PLATFORM_Windows)
 	WIN32_FIND_DATAA findFileData;
 	HANDLE hFind;
 
@@ -47,9 +55,33 @@ void FileSystem::MountDirectory(const std::string& directory)
 			m_Files.push_back({ directory ,findFileData.cFileName, ExtractExtension(findFileData.cFileName) });
 		}
 	} while (FindNextFileA(hFind, &findFileData) != 0);
-	
-	
+		
 	FindClose(hFind);
+#elif defined(PLATFORM_Linux)
+	DIR *dir;
+	struct dirent *ent;
+	class stat st;
+
+	dir = opendir(directory);
+	while ((ent = readdir(directory.c_str())) != NULL) {
+		const string file_name = ent->d_name;
+		const string full_file_name = directory + "/" + file_name;
+
+		if (file_name[0] == '.')
+			continue;
+
+		if (stat(full_file_name.c_str(), &st) == -1)
+			continue;
+
+		const bool is_directory = (st.st_mode & S_IFDIR) != 0;
+		if (is_directory)
+			continue;
+
+		m_files.push_back({ directory ,file_name, ExtractExtension(file_name) });
+	}
+	closedir(dir);
+
+#endif
 }
 
 
@@ -137,7 +169,11 @@ std::unique_ptr<File> FileSystem::GetFile(const std::string& filename) const
 	auto physicalFilePath = GetPhysicalFilePath(filename);
 	if (physicalFilePath != "")
 	{
+#if defined(PLATFORM_Windows)
 		return std::unique_ptr<File>(new WindowsFile(physicalFilePath));
+#elif defined(PLATFORM_Linux)
+		return std::unique_ptr<File>(new LinuxFile(physicalFilePath));
+#endif
 	}
 	return std::unique_ptr<File>();
 }

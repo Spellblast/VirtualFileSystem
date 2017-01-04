@@ -1,5 +1,6 @@
 #include "WindowsFile.h"
 #include "File.h"
+#if defined(PLATFORM_Windows)
 #include <windows.h>
 #include <tchar.h>
 
@@ -105,3 +106,5 @@ void WindowsFile::Close()
 	}
 	
 }
+#endif
+

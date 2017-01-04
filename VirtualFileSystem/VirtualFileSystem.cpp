@@ -12,8 +12,15 @@ int main()
 {
 	FileSystem system;
 
+#if defined(PLATFORM_Linux)
+	std::cout << "Running on Linux Platform" << std::endl;
+	system.MountDirectory("home/mike/TestDirectory");
+	system.MountDirectory("home/mike/AnotherTestDirectory");
+#elif defined(PLATFORM_Windows)
+	std::cout << "Running on Windows Platform" << std::endl;
 	system.MountDirectory("D:\\TestDirectory");
 	system.MountDirectory("D:\\AnotherTestDirectory");
+#endif
 
 	auto fullpath = system.GetPhysicalFilePath("file.txt");
 	std::cout << fullpath << std::endl;
@@ -73,5 +80,6 @@ int main()
 	output_file->Close();
 
     return 0;
+
 }
 
