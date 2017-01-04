@@ -19,9 +19,6 @@ startproject "example1"
 
 PROJ_DIR =path.getabsolute("..")
 flags { "NoExceptions", "NoRTTI", "NoPCH" }
-if (os.is("Windows")) then defines { "_CRT_SECURE_NO_WARNINGS" } end
-
-
 
     configuration { "Release" }
     	flags { "Optimize", "OptimizeSpeed", "NoEditAndContinue", "No64BitChecks" }
@@ -48,7 +45,7 @@ if (os.is("Windows")) then defines { "_CRT_SECURE_NO_WARNINGS" } end
 
     configuration {}
 
-project "example1"
+project "VirtualFileSystem"
 	
 	kind "ConsoleApp"
 	language "C++"
