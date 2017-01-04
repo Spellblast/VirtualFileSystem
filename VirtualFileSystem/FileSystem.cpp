@@ -60,7 +60,7 @@ void FileSystem::MountDirectory(const std::string& directory)
 #elif defined(PLATFORM_Linux)
 	DIR *dir;
 	struct dirent *ent;
-	struct stat st;
+	//struct stat st;
 
 	dir = opendir(directory);
 	while ((ent = readdir(directory.c_str())) != NULL) {
@@ -70,12 +70,12 @@ void FileSystem::MountDirectory(const std::string& directory)
 		if (file_name[0] == '.')
 			continue;
 
-		if (stat(full_file_name.c_str(), &st) == -1)
-			continue;
+	/*	if (stat(full_file_name.c_str(), &st) == -1)
+			continue;*/
 
-		const bool is_directory = (st.st_mode & S_IFDIR) != 0;
+		/*const bool is_directory = (st.st_mode & S_IFDIR) != 0;
 		if (is_directory)
-			continue;
+			continue;*/
 		std::cout << directory + "/" + file_name; << std::endl;
 		m_files.push_back({ directory ,file_name, ExtractExtension(file_name) });
 	}
