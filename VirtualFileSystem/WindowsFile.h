@@ -1,5 +1,6 @@
 #pragma once
 #include "File.h"
+#if defined(PLATFORM_Windows)
 #include <windows.h>
 #include <string>
 
@@ -22,4 +23,5 @@ private:
 	HANDLE m_hFile;
 	
 };
+#endif
 

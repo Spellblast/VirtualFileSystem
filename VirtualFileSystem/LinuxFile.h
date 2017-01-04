@@ -1,5 +1,6 @@
 #pragma once
 #include "File.h"
+#if defined(PLATFORM_Linux)
 #include <string>
 
 class LinuxFile :
@@ -20,4 +21,5 @@ protected:
 private:
 	int m_fd;
 };
+#endif
 
