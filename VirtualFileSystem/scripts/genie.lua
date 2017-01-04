@@ -30,7 +30,8 @@ project "VirtualFileSystem"
 
 	configuration {"linux","gmake"}
 		buildoptions_cpp{
-			"-std=c++14"
+			"-std=c++14",
+			"-std=gnu++14"
 		}
 	excludes {
 		path.join(PROJ_DIR, "Debug*"), 
