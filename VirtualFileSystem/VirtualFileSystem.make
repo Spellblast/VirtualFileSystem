@@ -62,7 +62,6 @@ ifeq ($(config),debug32)
   EXTERNAL_LIBS      +=
   LINKCMD             = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   OBJECTS := \
-	$(OBJDIR)/File.o \
 	$(OBJDIR)/FileSystem.o \
 	$(OBJDIR)/LinuxFile.o \
 	$(OBJDIR)/VirtualFileSystem.o \
@@ -97,7 +96,6 @@ ifeq ($(config),release32)
   EXTERNAL_LIBS      +=
   LINKCMD             = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   OBJECTS := \
-	$(OBJDIR)/File.o \
 	$(OBJDIR)/FileSystem.o \
 	$(OBJDIR)/LinuxFile.o \
 	$(OBJDIR)/VirtualFileSystem.o \
@@ -132,7 +130,6 @@ ifeq ($(config),debug64)
   EXTERNAL_LIBS      +=
   LINKCMD             = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   OBJECTS := \
-	$(OBJDIR)/File.o \
 	$(OBJDIR)/FileSystem.o \
 	$(OBJDIR)/LinuxFile.o \
 	$(OBJDIR)/VirtualFileSystem.o \
@@ -167,7 +164,6 @@ ifeq ($(config),release64)
   EXTERNAL_LIBS      +=
   LINKCMD             = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   OBJECTS := \
-	$(OBJDIR)/File.o \
 	$(OBJDIR)/FileSystem.o \
 	$(OBJDIR)/LinuxFile.o \
 	$(OBJDIR)/VirtualFileSystem.o \
@@ -202,7 +198,6 @@ ifeq ($(config),debug)
   EXTERNAL_LIBS      +=
   LINKCMD             = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   OBJECTS := \
-	$(OBJDIR)/File.o \
 	$(OBJDIR)/FileSystem.o \
 	$(OBJDIR)/LinuxFile.o \
 	$(OBJDIR)/VirtualFileSystem.o \
@@ -237,7 +232,6 @@ ifeq ($(config),release)
   EXTERNAL_LIBS      +=
   LINKCMD             = $(CXX) -o $(TARGET) $(OBJECTS) $(RESOURCES) $(ARCH) $(ALL_LDFLAGS) $(LIBS)
   OBJECTS := \
-	$(OBJDIR)/File.o \
 	$(OBJDIR)/FileSystem.o \
 	$(OBJDIR)/LinuxFile.o \
 	$(OBJDIR)/VirtualFileSystem.o \
@@ -301,10 +295,6 @@ $(GCH_OBJC): $(PCH) $(MAKEFILE) | $(OBJDIR)
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_OBJCPPFLAGS) -x objective-c++-header $(DEFINES) $(INCLUDES) -o "$@" -c "$<"
 endif
-
-$(OBJDIR)/File.o: File.cpp $(GCH) $(MAKEFILE)
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -c "$<"
 
 $(OBJDIR)/FileSystem.o: FileSystem.cpp $(GCH) $(MAKEFILE)
 	@echo $(notdir $<)

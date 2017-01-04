@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 2.8.4)
 project(VirtualFileSystem)
 set(
 source_list
-  ../File.cpp
   ../File.h
   ../FileSystem.cpp
   ../FileSystem.h
@@ -16,5 +15,5 @@ source_list
   ../stdafx.h
   ../targetver.h
 )
-add_definitions(-D_DEBUG)
+add_definitions(-DPLATFORM_Linux)
 add_executable(VirtualFileSystem ${source_list})
