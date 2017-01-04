@@ -60,7 +60,7 @@ void FileSystem::MountDirectory(const std::string& directory)
 #elif defined(PLATFORM_Linux)
 	DIR *dir;
 	struct dirent *ent;
-	class stat st;
+	struct stat st;
 
 	dir = opendir(directory);
 	while ((ent = readdir(directory.c_str())) != NULL) {
