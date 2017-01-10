@@ -102,7 +102,7 @@ std::string FileSystem::GetPhysicalFilePath(const std::string& filename) const
 	std::vector<std::string> PossibleFiles;
 	while (it != m_Files.end())
 	{
-		it = find_if(it, m_Files.end(), [file = filename](FileEntry e) -> bool {return e.m_Name == file; });
+		it = find_if(it, m_Files.end(), [file = filename](FileEntry e) -> bool {return strncmp(e.m_Name.c_str(), file.c_str(), file.length()) == 0; });
 		if (it != m_Files.end())
 		{
 			FileEntry e = *it;
@@ -173,7 +173,7 @@ void FileSystem::GetFilesWithExtension(std::vector<std::string>& file_table, con
 	auto it = m_Files.begin();
 	while (it != m_Files.end())
 	{
-		it = find_if(it, m_Files.end(), [extension = extension](FileEntry e) -> bool {return e.m_Extension == extension; });
+		it = find_if(it, m_Files.end(), [extension = extension](FileEntry e) -> bool {return strncmp(e.m_Extension.c_str(),extension.c_str(),extension.length()) == 0; });
 		if (it != m_Files.end())
 		{
 			FileEntry e = *it;
